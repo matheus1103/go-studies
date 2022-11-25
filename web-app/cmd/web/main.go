@@ -8,6 +8,7 @@ import (
 	"github.com/matheus1103/go-studies/pkg/render"
 	"log"
 	"net/http"
+	"time"
 )
 
 const portNumber = ":8080"
@@ -23,7 +24,7 @@ func main() {
 
 	// initialize session
 	session = scs.New()
-	session.Lifetime = 24 * 60 // 24 hours
+	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
@@ -51,5 +52,7 @@ func main() {
 	}
 
 	err = srv.ListenAndServe()
-	log.Fatal(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
